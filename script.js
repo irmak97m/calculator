@@ -1,76 +1,57 @@
 console.log("hello world!");
 
-
-const clearBtn = document.querySelector("#clear");
-const operatorArray = document.querySelectorAll(".operator");
-const numberArray = document.querySelectorAll(".number");
 const display = document.querySelector("#display");
-const history = document.querySelector("#history");
 
-//calculations
+const clearAllBtn = document.querySelector("#clearAll");
 
-function add(a,b) {
-    return a + b;
+clearAllBtn.addEventListener("click", () => {
+    display.textContent = "";
+});
+
+
+
+function getAllInputs() {
+    return display.textContent.trim().split(" ");
 }
 
-function substract(a,b) {
-    return a - b;
+function getLastInput() {
+    return getAllInputs()[getAllInputs().length -1]
 }
 
-function multiply(a,b) {
-    return a * b;
+function decimalCheck() {
+    if (display.textContent == "" || !isNaN(Number(getLastInput())) == false) {
+        return true;
+    } else if (!isNaN(Number(getLastInput())) == true){
+        return false;
+    }
 }
 
-function divide(a,b) {
-    return a / b;
-}
 
-function percentage(a,b) {
-    return a * b / 100 ;
-}
-
-function plusMinusFunc(a) {
-    return a * -1;
-}
-
-function operate(operator, leftVal,rightVal) {
-    switch (operator) {
-        case "+":
-            return add(leftVal,rightVal);
-            break;
-        case "-":
-            return substract(leftVal,rightVal)
-            break;
-        case "*":
-            return multiply(leftVal,rightVal)
-            break;
-        case "/":
-            if (rightVal !== 0) {
-                return divide(leftVal,rightVal)
-            } else {
-                return "You can't divide to zero";
-            }
-            break;
-        case "%":
-            return percentage(leftVal,rightVal);
-            break;
-        case "+/-":
-            if (leftVal !==undefined 
-                && rightVal == undefined) {
-                return plusMinus(leftVal);
-            };
-            break;
-    };
-};
-
-numberArray.forEach(number => {
+const numberInputs = document.querySelectorAll(".number");
+numberInputs.forEach(number => {
     number.addEventListener("click", () => {
-        display.textContent += number.textContent;
+        if (number.id == "decimal") {
+            switch (decimalCheck()) {
+                case true:
+                    display.textContent += "0.";
+                    break;
+                case false:
+                    if(!getLastInput().includes(".")){
+                        display.textContent += number.textContent;
+                    }
+                    break;
+            }
+        } else {
+            display.textContent += number.textContent;
+        }
     });
 });
 
-operatorArray.forEach(operator => {
+const operatorInputs = document.querySelectorAll(".operator");
+operatorInputs.forEach(operator => {
     operator.addEventListener("click", () => {
-        display.textContent += operator.textContent;
-    })
-})
+        if (isNaN(Number(getLastInput()))) {
+            
+        }
+    });
+});  
