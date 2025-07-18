@@ -26,8 +26,9 @@ function decimalCheck() {
     }
 }
 
-
+//--------------------
 const numberInputs = document.querySelectorAll(".number");
+
 numberInputs.forEach(number => {
     number.addEventListener("click", () => {
         if (number.id == "decimal") {
@@ -47,11 +48,15 @@ numberInputs.forEach(number => {
     });
 });
 
+//--------------------
 const operatorInputs = document.querySelectorAll(".operator");
+
 operatorInputs.forEach(operator => {
     operator.addEventListener("click", () => {
-        if (isNaN(Number(getLastInput()))) {
-            
+        if (!isNaN(Number(getLastInput())) == false) {
+            display.textContent = display.textContent.slice(0, -3) + operator.textContent;
+        } else {
+            display.textContent += operator.textContent;
         }
     });
-});  
+});
