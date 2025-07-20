@@ -90,13 +90,10 @@ body {
     gap: 0.2rem;
 }
 
-#controls * *:hover,
-#footer *:hover {
+#controls * *:hover {
     opacity: 0.7;
 }
 
-#footer {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+#clearAll {
+    width: 52%;
 }

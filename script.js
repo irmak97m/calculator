@@ -8,8 +8,6 @@ clearAllBtn.addEventListener("click", () => {
     display.textContent = "";
 });
 
-
-
 function getAllInputs() {
     return display.textContent.trim().split(" ");
 }
@@ -53,10 +51,47 @@ const operatorInputs = document.querySelectorAll(".operator");
 
 operatorInputs.forEach(operator => {
     operator.addEventListener("click", () => {
-        if (!isNaN(Number(getLastInput())) == false) {
-            display.textContent = display.textContent.slice(0, -3) + operator.textContent;
-        } else {
-            display.textContent += operator.textContent;
+        switch (operator.id) {
+            case "substract":
+                display.textContent += operator.textContent;
+                break;
+        
+            default:
+                if (!isNaN(Number(getLastInput())) == false) {
+                    display.textContent = display.textContent.slice(0, -3) + operator.textContent;
+                } else if (display.textContent !== ""){
+                    display.textContent += operator.textContent;
+                }
+                break;
+        }
+    });
+});
+
+//--------------------
+
+function safeEval(expr) {
+  if (/^[\d+\-*/ ().%]+$/.test(expr)) {
+    return Function('"use strict"; return (' + expr + ')')();
+  } else {
+    throw new Error("Invalid expression");
+  }
+}
+
+//--------------------
+
+const resultOperator = document.querySelectorAll(".resultOperator");
+
+resultOperator.forEach(operator => {
+    operator.addEventListener("click", () => {
+        switch (operator.id) {
+            case "result":
+                display.textContent = safeEval(display.textContent);
+                return display.textContent;
+                break;
+            case "plusMinus":
+                display.textContent = safeEval(display.textContent) * (-1);
+                return display.textContent;
+                break;
         }
     });
 });
